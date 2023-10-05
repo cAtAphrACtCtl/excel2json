@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Data;
 using System.Text;
@@ -23,7 +23,7 @@ namespace excel2json
             {
                 //-- GUI MODE ----------------------------------------------------------
                 Console.WriteLine("Launch excel2json GUI Mode...");
-                Application.EnableVisualStyles();
+                Application.SetHighDpiMode(HighDpiMode.SystemAware);
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new GUI.MainForm());
             }
@@ -34,8 +34,8 @@ namespace excel2json
                 //-- 分析命令行参数
                 var options = new Options();
                 var parser = new CommandLine.Parser(with => with.HelpWriter = Console.Error);
-
-                if (parser.ParseArgumentsStrict(args, options, () => Environment.Exit(-1)))
+                var result = parser.ParseArguments<Options>(args);
+                if (result is not null)
                 {
                     //-- 执行导出操作
                     try
