@@ -17,6 +17,7 @@ namespace excel2json {
                 // Auto-detect format, supports:
                 //  - Binary Excel files (2.0-2003 format; *.xls)
                 //  - OpenXml Excel files (2007 format; *.xlsx)
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
                 using (var reader = ExcelReaderFactory.CreateReader(stream)) {
                     // Use the AsDataSet extension method
                     // The result of each spreadsheet is in result.Tables

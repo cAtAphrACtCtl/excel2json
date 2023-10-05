@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
@@ -137,7 +138,7 @@ namespace excel2json.GUI
             //-- load options from ui
             Program.Options options = new Program.Options();
             options.ExcelPath = path;
-            options.ExportArray = this.comboBoxType.SelectedIndex == 0;
+            options.ExportArray = this.comboBoxType.SelectedItem as string == "Array";
             options.Encoding = this.comboBoxEncoding.SelectedText;
             options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
             options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
@@ -146,6 +147,7 @@ namespace excel2json.GUI
             options.ExcludePrefix = this.textBoxExculdePrefix.Text;
             options.CellJson = this.checkBoxCellJson.Checked;
             options.AllString = this.checkBoxAllString.Checked;
+            options.NameSpace = this.textBoxNameSpace.Text;
 
             //-- start import
             this.backgroundWorker.RunWorkerAsync(options);
@@ -257,10 +259,16 @@ namespace excel2json.GUI
             }
         }
 
+        public enum FileType
+        {
+            json = 1,
+            csharp,
+        }
+
         /// <summary>
         /// 保存导出文件
         /// </summary>
-        private void saveToFile(int type, string filter)
+        private void saveToFile(FileType type, string filter)
         {
 
             try
@@ -275,10 +283,10 @@ namespace excel2json.GUI
                     {
                         switch (type)
                         {
-                            case 1:
+                            case FileType.json:
                                 mDataMgr.saveJson(dlg.FileName);
                                 break;
-                            case 2:
+                            case FileType.csharp:
                                 mDataMgr.saveCSharp(dlg.FileName);
                                 break;
                         }
@@ -297,7 +305,7 @@ namespace excel2json.GUI
         /// </summary>
         private void btnSaveJson_Click(object sender, EventArgs e)
         {
-            saveToFile(1, "Json File(*.json)|*.json");
+            saveToFile(FileType.json, "Json File(*.json)|*.json");
         }
 
         /// <summary>
@@ -346,7 +354,98 @@ namespace excel2json.GUI
 
         private void btnSaveCSharp_Click(object sender, EventArgs e)
         {
-            saveToFile(2, "C# code file(*.cs)|*.cs");
+            saveToFile(FileType.csharp, "C# code file(*.cs)|*.cs");
+        }
+
+        private void btnExportJson_Click(object sender, EventArgs e)
+        {
+            var jsonPath = textBoxBatchJsonPath.Text;
+            var excelPath = textBoxExcelPath.Text;
+            if (string.IsNullOrWhiteSpace(excelPath))
+            {
+                return;
+            }
+            var excels = Directory.GetFiles(excelPath, "*.xlsx");
+            var option = GetGUIOptions();
+
+            foreach (var excel in excels)
+            {
+                var excelName = Path.GetFileNameWithoutExtension(excel);
+                var jsonFullPath = Path.Combine(jsonPath, $"{excelName}.json");
+                var mgr = new DataManager();
+
+                option.ExcelPath = excel;
+                option.JsonPath = jsonFullPath;
+
+                mgr.loadExcel(option);
+                mgr.saveJson(jsonFullPath);
+            }
+        }
+
+        private void btnExportCode_Click(object sender, EventArgs e)
+        {
+            var csPath = textBoxBatchCSPath.Text;
+            var excelPath = textBoxExcelPath.Text;
+            if (string.IsNullOrWhiteSpace(excelPath))
+            {
+                return;
+            }
+            var excels = Directory.GetFiles(excelPath, "*.xlsx");
+            var option = GetGUIOptions();
+
+            foreach (var excel in excels)
+            {
+                var excelName = Path.GetFileNameWithoutExtension(excel);
+                var csFullPath = Path.Combine(csPath, $"{excelName}.cs");
+                var mgr = new DataManager();
+
+                option.ExcelPath = excel;
+                option.JsonPath = csFullPath;
+
+                mgr.loadExcel(option);
+                mgr.saveCSharp(csFullPath);
+            }
+        }
+
+        private void textBoxFilePath_Click(object sender, EventArgs e)
+        {
+            SetTextBoxPath(sender as TextBox);
+        }
+
+        private void textBoxExportJsonPath_Click(object sender, EventArgs e)
+        {
+            SetTextBoxPath(sender as TextBox);
+        }
+
+        private void textBoxExcelPath_Click(object sender, EventArgs e)
+        {
+            SetTextBoxPath(sender as TextBox);
+        }
+
+        void SetTextBoxPath(TextBox textBox)
+        {
+            var pathDialog = new FolderBrowserDialog();
+            var result = pathDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                textBox.Text = pathDialog.SelectedPath;
+            }
+        }
+
+        Program.Options GetGUIOptions()
+        {
+            Program.Options options = new Program.Options();
+            options.ExportArray = this.comboBoxType.SelectedItem as string == "Array";
+            options.Encoding = this.comboBoxEncoding.SelectedText;
+            options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
+            options.HeaderRows = int.Parse(this.comboBoxHeader.Text);
+            options.DateFormat = this.comboBoxDateFormat.Text;
+            options.ForceSheetName = this.comboBoxSheetName.SelectedIndex == 0;
+            options.ExcludePrefix = this.textBoxExculdePrefix.Text;
+            options.CellJson = this.checkBoxCellJson.Checked;
+            options.AllString = this.checkBoxAllString.Checked;
+            options.NameSpace = this.textBoxNameSpace.Text;
+            return options;
         }
     }
 }

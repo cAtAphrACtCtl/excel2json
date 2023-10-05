@@ -71,6 +71,11 @@ namespace excel2json
             }
         }
 
+        public JsonExporter(ExcelLoader excel, Program.Options options)
+            : this(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, options.HeaderRows, options.ExcludePrefix, options.CellJson, options.AllString)
+        {
+        }
+
         private object convertSheet(DataTable sheet, bool exportArray, bool lowcase, string excludePrefix, bool cellJson, bool allString)
         {
             if (exportArray)

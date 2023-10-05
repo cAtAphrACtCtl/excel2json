@@ -11,7 +11,7 @@ namespace excel2json.GUI
     {
 
         // 数据导入设置
-        private Program.Options mOptions;
+        public Program.Options mOptions { get; private set; }
         private Encoding mEncoding;
 
         // 导出数据
@@ -93,7 +93,7 @@ namespace excel2json.GUI
             ExcelLoader excel = new ExcelLoader(excelPath, header);
 
             //-- C# 结构体定义
-            mCSharp = new CSDefineGenerator(excelPath, excel, options.ExcludePrefix);
+            mCSharp = new CSDefineGenerator(excelPath, excel, options.ExcludePrefix, options.NameSpace);
 
             //-- 导出JSON
             mJson = new JsonExporter(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, header, options.ExcludePrefix, options.CellJson, options.AllString);

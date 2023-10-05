@@ -35,6 +35,8 @@
             System.Windows.Forms.Label label5;
             System.Windows.Forms.Label label6;
             System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label label8;
+            System.Windows.Forms.Label label9;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             statusStrip = new System.Windows.Forms.StatusStrip();
             statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,6 +56,12 @@
             pictureBoxExcel = new System.Windows.Forms.PictureBox();
             labelExcelFile = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            textBoxExcelPath = new System.Windows.Forms.TextBox();
+            btnExportCode = new System.Windows.Forms.Button();
+            btnExportJson = new System.Windows.Forms.Button();
+            textBoxBatchCSPath = new System.Windows.Forms.TextBox();
+            textBoxBatchJsonPath = new System.Windows.Forms.TextBox();
+            textBoxNameSpace = new System.Windows.Forms.TextBox();
             checkBoxAllString = new System.Windows.Forms.CheckBox();
             checkBoxCellJson = new System.Windows.Forms.CheckBox();
             textBoxExculdePrefix = new System.Windows.Forms.TextBox();
@@ -75,6 +83,8 @@
             label5 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
+            label9 = new System.Windows.Forms.Label();
             statusStrip.SuspendLayout();
             toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -160,6 +170,26 @@
             label7.Text = "ExculdePrefix:";
             label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // label8
+            // 
+            label8.Location = new System.Drawing.Point(-87, 664);
+            label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(187, 24);
+            label8.TabIndex = 23;
+            label8.Text = "ExcelPath:";
+            label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label9
+            // 
+            label9.Location = new System.Drawing.Point(-75, 537);
+            label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(187, 24);
+            label9.TabIndex = 24;
+            label9.Text = "NameSpace";
+            label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // statusStrip
             // 
             statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -189,7 +219,7 @@
             toolStrip.Location = new System.Drawing.Point(0, 0);
             toolStrip.Name = "toolStrip";
             toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 4, 0);
-            toolStrip.Size = new System.Drawing.Size(1437, 57);
+            toolStrip.Size = new System.Drawing.Size(1437, 33);
             toolStrip.TabIndex = 4;
             toolStrip.Text = "Import excel file and export as JSON";
             // 
@@ -197,7 +227,7 @@
             // 
             btnImportExcel.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnImportExcel.Name = "btnImportExcel";
-            btnImportExcel.Size = new System.Drawing.Size(121, 52);
+            btnImportExcel.Size = new System.Drawing.Size(121, 28);
             btnImportExcel.Text = "Import Excel";
             btnImportExcel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnImportExcel.ToolTipText = "Import Excel .xlsx file";
@@ -206,13 +236,13 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(6, 57);
+            toolStripSeparator1.Size = new System.Drawing.Size(6, 33);
             // 
             // btnCopyJSON
             // 
             btnCopyJSON.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnCopyJSON.Name = "btnCopyJSON";
-            btnCopyJSON.Size = new System.Drawing.Size(111, 52);
+            btnCopyJSON.Size = new System.Drawing.Size(111, 28);
             btnCopyJSON.Text = "Copy JSON";
             btnCopyJSON.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnCopyJSON.ToolTipText = "Copy JSON string to clipboard";
@@ -222,7 +252,7 @@
             // 
             btnSaveJson.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnSaveJson.Name = "btnSaveJson";
-            btnSaveJson.Size = new System.Drawing.Size(105, 52);
+            btnSaveJson.Size = new System.Drawing.Size(105, 28);
             btnSaveJson.Text = "Save JSON";
             btnSaveJson.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnSaveJson.ToolTipText = "Save JSON file";
@@ -232,7 +262,7 @@
             // 
             btnCopyCSharp.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnCopyCSharp.Name = "btnCopyCSharp";
-            btnCopyCSharp.Size = new System.Drawing.Size(87, 52);
+            btnCopyCSharp.Size = new System.Drawing.Size(87, 28);
             btnCopyCSharp.Text = "Copy C#";
             btnCopyCSharp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnCopyCSharp.ToolTipText = "Save JSON file";
@@ -242,7 +272,7 @@
             // 
             btnSaveCSharp.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnSaveCSharp.Name = "btnSaveCSharp";
-            btnSaveCSharp.Size = new System.Drawing.Size(81, 52);
+            btnSaveCSharp.Size = new System.Drawing.Size(81, 28);
             btnSaveCSharp.Text = "Save C#";
             btnSaveCSharp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnSaveCSharp.ToolTipText = "Save JSON file";
@@ -251,13 +281,13 @@
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new System.Drawing.Size(6, 57);
+            toolStripSeparator2.Size = new System.Drawing.Size(6, 33);
             // 
             // btnHelp
             // 
             btnHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             btnHelp.Name = "btnHelp";
-            btnHelp.Size = new System.Drawing.Size(55, 52);
+            btnHelp.Size = new System.Drawing.Size(55, 28);
             btnHelp.Text = "Help";
             btnHelp.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             btnHelp.ToolTipText = "Help Document on web";
@@ -268,8 +298,8 @@
             splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            splitContainer1.Location = new System.Drawing.Point(0, 57);
-            splitContainer1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            splitContainer1.Location = new System.Drawing.Point(0, 33);
+            splitContainer1.Margin = new System.Windows.Forms.Padding(6);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -279,7 +309,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(tabControlCode);
-            splitContainer1.Size = new System.Drawing.Size(1437, 1036);
+            splitContainer1.Size = new System.Drawing.Size(1437, 1060);
             splitContainer1.SplitterDistance = 288;
             splitContainer1.SplitterWidth = 7;
             splitContainer1.TabIndex = 5;
@@ -291,9 +321,9 @@
             flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new System.Drawing.Size(286, 1034);
+            flowLayoutPanel1.Size = new System.Drawing.Size(286, 1058);
             flowLayoutPanel1.TabIndex = 0;
             // 
             // panelExcelDropBox
@@ -316,7 +346,7 @@
             flowLayoutPanel2.Controls.Add(labelExcelFile);
             flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(6);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
             flowLayoutPanel2.Size = new System.Drawing.Size(491, 260);
             flowLayoutPanel2.TabIndex = 0;
@@ -324,7 +354,7 @@
             // pictureBoxExcel
             // 
             pictureBoxExcel.Location = new System.Drawing.Point(6, 6);
-            pictureBoxExcel.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            pictureBoxExcel.Margin = new System.Windows.Forms.Padding(6);
             pictureBoxExcel.Name = "pictureBoxExcel";
             pictureBoxExcel.Size = new System.Drawing.Size(480, 174);
             pictureBoxExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -345,6 +375,14 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label9);
+            groupBox1.Controls.Add(label8);
+            groupBox1.Controls.Add(textBoxExcelPath);
+            groupBox1.Controls.Add(btnExportCode);
+            groupBox1.Controls.Add(btnExportJson);
+            groupBox1.Controls.Add(textBoxBatchCSPath);
+            groupBox1.Controls.Add(textBoxBatchJsonPath);
+            groupBox1.Controls.Add(textBoxNameSpace);
             groupBox1.Controls.Add(checkBoxAllString);
             groupBox1.Controls.Add(checkBoxCellJson);
             groupBox1.Controls.Add(textBoxExculdePrefix);
@@ -366,17 +404,73 @@
             groupBox1.Location = new System.Drawing.Point(15, 306);
             groupBox1.Margin = new System.Windows.Forms.Padding(15, 16, 15, 16);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            groupBox1.Size = new System.Drawing.Size(493, 656);
+            groupBox1.Padding = new System.Windows.Forms.Padding(6);
+            groupBox1.Size = new System.Drawing.Size(493, 730);
             groupBox1.TabIndex = 3;
             groupBox1.TabStop = false;
             groupBox1.Text = "Options";
+            // 
+            // textBoxExcelPath
+            // 
+            textBoxExcelPath.Location = new System.Drawing.Point(103, 657);
+            textBoxExcelPath.Margin = new System.Windows.Forms.Padding(6);
+            textBoxExcelPath.Name = "textBoxExcelPath";
+            textBoxExcelPath.Size = new System.Drawing.Size(272, 30);
+            textBoxExcelPath.TabIndex = 22;
+            textBoxExcelPath.DoubleClick += textBoxExcelPath_Click;
+            // 
+            // btnExportCode
+            // 
+            btnExportCode.Location = new System.Drawing.Point(-4, 614);
+            btnExportCode.Name = "btnExportCode";
+            btnExportCode.Size = new System.Drawing.Size(116, 34);
+            btnExportCode.TabIndex = 21;
+            btnExportCode.Text = "ExportCode";
+            btnExportCode.UseVisualStyleBackColor = true;
+            btnExportCode.Click += btnExportCode_Click;
+            // 
+            // btnExportJson
+            // 
+            btnExportJson.Location = new System.Drawing.Point(-12, 573);
+            btnExportJson.Name = "btnExportJson";
+            btnExportJson.Size = new System.Drawing.Size(124, 34);
+            btnExportJson.TabIndex = 20;
+            btnExportJson.Text = "ExportJson";
+            btnExportJson.UseVisualStyleBackColor = true;
+            btnExportJson.Click += btnExportJson_Click;
+            // 
+            // textBoxBatchCSPath
+            // 
+            textBoxBatchCSPath.Location = new System.Drawing.Point(121, 615);
+            textBoxBatchCSPath.Margin = new System.Windows.Forms.Padding(6);
+            textBoxBatchCSPath.Name = "textBoxBatchCSPath";
+            textBoxBatchCSPath.Size = new System.Drawing.Size(272, 30);
+            textBoxBatchCSPath.TabIndex = 19;
+            textBoxBatchCSPath.DoubleClick += textBoxExportJsonPath_Click;
+            // 
+            // textBoxBatchJsonPath
+            // 
+            textBoxBatchJsonPath.Location = new System.Drawing.Point(121, 573);
+            textBoxBatchJsonPath.Margin = new System.Windows.Forms.Padding(6);
+            textBoxBatchJsonPath.Name = "textBoxBatchJsonPath";
+            textBoxBatchJsonPath.Size = new System.Drawing.Size(272, 30);
+            textBoxBatchJsonPath.TabIndex = 18;
+            textBoxBatchJsonPath.DoubleClick += textBoxFilePath_Click;
+            // 
+            // textBoxNameSpace
+            // 
+            textBoxNameSpace.Location = new System.Drawing.Point(121, 531);
+            textBoxNameSpace.Margin = new System.Windows.Forms.Padding(6);
+            textBoxNameSpace.Name = "textBoxNameSpace";
+            textBoxNameSpace.Size = new System.Drawing.Size(272, 30);
+            textBoxNameSpace.TabIndex = 17;
+            textBoxNameSpace.Text = "Game.Data";
             // 
             // checkBoxAllString
             // 
             checkBoxAllString.AutoSize = true;
             checkBoxAllString.Location = new System.Drawing.Point(37, 460);
-            checkBoxAllString.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            checkBoxAllString.Margin = new System.Windows.Forms.Padding(6);
             checkBoxAllString.Name = "checkBoxAllString";
             checkBoxAllString.Size = new System.Drawing.Size(116, 28);
             checkBoxAllString.TabIndex = 16;
@@ -387,7 +481,7 @@
             // 
             checkBoxCellJson.AutoSize = true;
             checkBoxCellJson.Location = new System.Drawing.Point(37, 420);
-            checkBoxCellJson.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            checkBoxCellJson.Margin = new System.Windows.Forms.Padding(6);
             checkBoxCellJson.Name = "checkBoxCellJson";
             checkBoxCellJson.Size = new System.Drawing.Size(260, 28);
             checkBoxCellJson.TabIndex = 15;
@@ -397,7 +491,7 @@
             // textBoxExculdePrefix
             // 
             textBoxExculdePrefix.Location = new System.Drawing.Point(209, 360);
-            textBoxExculdePrefix.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            textBoxExculdePrefix.Margin = new System.Windows.Forms.Padding(6);
             textBoxExculdePrefix.Name = "textBoxExculdePrefix";
             textBoxExculdePrefix.Size = new System.Drawing.Size(272, 30);
             textBoxExculdePrefix.TabIndex = 14;
@@ -409,7 +503,7 @@
             comboBoxSheetName.FormattingEnabled = true;
             comboBoxSheetName.Items.AddRange(new object[] { "Yes", "No" });
             comboBoxSheetName.Location = new System.Drawing.Point(209, 306);
-            comboBoxSheetName.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxSheetName.Margin = new System.Windows.Forms.Padding(6);
             comboBoxSheetName.Name = "comboBoxSheetName";
             comboBoxSheetName.Size = new System.Drawing.Size(272, 32);
             comboBoxSheetName.TabIndex = 10;
@@ -421,7 +515,7 @@
             comboBoxDateFormat.FormattingEnabled = true;
             comboBoxDateFormat.Items.AddRange(new object[] { "yyyy/MM/dd", "yyyy/MM/dd hh:mm:ss" });
             comboBoxDateFormat.Location = new System.Drawing.Point(209, 254);
-            comboBoxDateFormat.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxDateFormat.Margin = new System.Windows.Forms.Padding(6);
             comboBoxDateFormat.Name = "comboBoxDateFormat";
             comboBoxDateFormat.Size = new System.Drawing.Size(272, 32);
             comboBoxDateFormat.TabIndex = 8;
@@ -430,10 +524,10 @@
             // btnReimport
             // 
             btnReimport.Dock = System.Windows.Forms.DockStyle.Bottom;
-            btnReimport.Location = new System.Drawing.Point(6, 602);
-            btnReimport.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            btnReimport.Location = new System.Drawing.Point(6, 694);
+            btnReimport.Margin = new System.Windows.Forms.Padding(6);
             btnReimport.Name = "btnReimport";
-            btnReimport.Size = new System.Drawing.Size(481, 48);
+            btnReimport.Size = new System.Drawing.Size(481, 30);
             btnReimport.TabIndex = 7;
             btnReimport.Text = "Reimport";
             btnReimport.UseVisualStyleBackColor = true;
@@ -446,7 +540,7 @@
             comboBoxLowcase.FormattingEnabled = true;
             comboBoxLowcase.Items.AddRange(new object[] { "Yes", "No" });
             comboBoxLowcase.Location = new System.Drawing.Point(209, 150);
-            comboBoxLowcase.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxLowcase.Margin = new System.Windows.Forms.Padding(6);
             comboBoxLowcase.Name = "comboBoxLowcase";
             comboBoxLowcase.Size = new System.Drawing.Size(272, 32);
             comboBoxLowcase.TabIndex = 5;
@@ -458,7 +552,7 @@
             comboBoxHeader.FormattingEnabled = true;
             comboBoxHeader.Items.AddRange(new object[] { "2", "3", "4", "5", "6" });
             comboBoxHeader.Location = new System.Drawing.Point(209, 202);
-            comboBoxHeader.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxHeader.Margin = new System.Windows.Forms.Padding(6);
             comboBoxHeader.Name = "comboBoxHeader";
             comboBoxHeader.Size = new System.Drawing.Size(272, 32);
             comboBoxHeader.TabIndex = 3;
@@ -470,7 +564,7 @@
             comboBoxEncoding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxEncoding.FormattingEnabled = true;
             comboBoxEncoding.Location = new System.Drawing.Point(209, 98);
-            comboBoxEncoding.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxEncoding.Margin = new System.Windows.Forms.Padding(6);
             comboBoxEncoding.Name = "comboBoxEncoding";
             comboBoxEncoding.Size = new System.Drawing.Size(272, 32);
             comboBoxEncoding.TabIndex = 0;
@@ -481,9 +575,9 @@
             comboBoxType.DisplayMember = "0";
             comboBoxType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBoxType.FormattingEnabled = true;
-            comboBoxType.Items.AddRange(new object[] { "Array", "Dict Object" });
+            comboBoxType.Items.AddRange(new object[] { "Dict Object", "Array" });
             comboBoxType.Location = new System.Drawing.Point(209, 46);
-            comboBoxType.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            comboBoxType.Margin = new System.Windows.Forms.Padding(6);
             comboBoxType.Name = "comboBoxType";
             comboBoxType.Size = new System.Drawing.Size(272, 32);
             comboBoxType.TabIndex = 0;
@@ -495,19 +589,19 @@
             tabControlCode.Controls.Add(tabCSharp);
             tabControlCode.Dock = System.Windows.Forms.DockStyle.Fill;
             tabControlCode.Location = new System.Drawing.Point(0, 0);
-            tabControlCode.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            tabControlCode.Margin = new System.Windows.Forms.Padding(6);
             tabControlCode.Name = "tabControlCode";
             tabControlCode.SelectedIndex = 0;
-            tabControlCode.Size = new System.Drawing.Size(1140, 1034);
+            tabControlCode.Size = new System.Drawing.Size(1140, 1058);
             tabControlCode.TabIndex = 0;
             // 
             // tabPageJSON
             // 
             tabPageJSON.Location = new System.Drawing.Point(4, 33);
-            tabPageJSON.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            tabPageJSON.Margin = new System.Windows.Forms.Padding(6);
             tabPageJSON.Name = "tabPageJSON";
-            tabPageJSON.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            tabPageJSON.Size = new System.Drawing.Size(1132, 997);
+            tabPageJSON.Padding = new System.Windows.Forms.Padding(6);
+            tabPageJSON.Size = new System.Drawing.Size(1132, 1021);
             tabPageJSON.TabIndex = 0;
             tabPageJSON.Text = "JSON";
             tabPageJSON.UseVisualStyleBackColor = true;
@@ -515,10 +609,10 @@
             // tabCSharp
             // 
             tabCSharp.Location = new System.Drawing.Point(4, 33);
-            tabCSharp.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            tabCSharp.Margin = new System.Windows.Forms.Padding(6);
             tabCSharp.Name = "tabCSharp";
-            tabCSharp.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            tabCSharp.Size = new System.Drawing.Size(890, 943);
+            tabCSharp.Padding = new System.Windows.Forms.Padding(6);
+            tabCSharp.Size = new System.Drawing.Size(1132, 1021);
             tabCSharp.TabIndex = 1;
             tabCSharp.Text = "C#";
             tabCSharp.UseVisualStyleBackColor = true;
@@ -537,7 +631,7 @@
             Controls.Add(toolStrip);
             Controls.Add(statusStrip);
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
-            Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            Margin = new System.Windows.Forms.Padding(6);
             MinimumSize = new System.Drawing.Size(1448, 1144);
             Name = "MainForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -594,5 +688,11 @@
         private System.Windows.Forms.TextBox textBoxExculdePrefix;
         private System.Windows.Forms.CheckBox checkBoxCellJson;
         private System.Windows.Forms.CheckBox checkBoxAllString;
+        private System.Windows.Forms.TextBox textBoxBatchCSPath;
+        private System.Windows.Forms.TextBox textBoxBatchJsonPath;
+        private System.Windows.Forms.TextBox textBoxNameSpace;
+        private System.Windows.Forms.Button btnExportCode;
+        private System.Windows.Forms.Button btnExportJson;
+        private System.Windows.Forms.TextBox textBoxExcelPath;
     }
 }

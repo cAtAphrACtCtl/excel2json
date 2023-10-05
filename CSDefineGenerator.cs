@@ -17,6 +17,28 @@ namespace excel2json
             public string name;
             public string type;
             public string comment;
+
+            public string ToDefineString()
+            {
+                if (isGodotType())
+                {
+                    return $"\tpublic {type} {name}; // {comment}";
+                }
+                else
+                {
+                    return $"\tpublic {type} {name}; // {comment}";
+                }
+            }
+
+            bool isGodotType()
+            {
+                return GodotType.Contains(type);
+            }
+
+            static HashSet<string> GodotType = new HashSet<string>
+            {
+                "StringName",
+            };
         }
 
         string mCode;
@@ -27,19 +49,25 @@ namespace excel2json
             }
         }
 
-        public CSDefineGenerator(string excelName, ExcelLoader excel, string excludePrefix)
+        public CSDefineGenerator(string excelName, ExcelLoader excel, string excludePrefix, string nameSpace = "")
         {
             //-- 创建代码字符串
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("//");
             sb.AppendLine("// Auto Generated Code By excel2json");
-            sb.AppendLine("// https://neil3d.gitee.io/coding/excel2json.html");
+            //sb.AppendLine("// https://neil3d.gitee.io/coding/excel2json.html");
             sb.AppendLine("// 1. 每个 Sheet 形成一个 Struct 定义, Sheet 的名称作为 Struct 的名称");
             sb.AppendLine("// 2. 表格约定：第一行是变量名称，第二行是变量类型");
             sb.AppendLine();
-            sb.AppendFormat("// Generate From {0}.xlsx", excelName);
+            sb.AppendFormat("// Generate From {0}", excelName);
             sb.AppendLine();
+            sb.AppendLine("using Godot;");
             sb.AppendLine();
+
+            if (!string.IsNullOrWhiteSpace(nameSpace))
+            {
+                sb.AppendLine($"namespace {nameSpace};");
+            }
 
             for (int i = 0; i < excel.Sheets.Count; i++)
             {
@@ -89,7 +117,7 @@ namespace excel2json
 
             foreach (FieldDef field in fieldList)
             {
-                sb.AppendFormat("\tpublic {0} {1}; // {2}", field.type, field.name, field.comment);
+                sb.AppendLine(field.ToDefineString());
                 sb.AppendLine();
             }
 

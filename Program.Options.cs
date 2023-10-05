@@ -80,7 +80,7 @@ namespace excel2json
                 set;
             }
 
-            [Option('l', "cell_json", Required = false, Default = false, HelpText = "convert json string in cell")]
+            [Option('m', "cell_json", Required = false, Default = false, HelpText = "convert json string in cell")]
             public bool CellJson {
                 get;
                 set;
@@ -88,6 +88,13 @@ namespace excel2json
 
             [Option('l', "all_string", Required = false, Default = false, HelpText = "all string")]
             public bool AllString
+            {
+                get;
+                set;
+            }
+
+            [Option('n', "name_space", Required = false, Default = "Game.Data", HelpText = "NameSpace")]
+            public string NameSpace
             {
                 get;
                 set;
