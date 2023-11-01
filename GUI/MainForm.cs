@@ -1,10 +1,13 @@
-﻿using FastColoredTextBoxNS;
+﻿using DotLiquid;
+using FastColoredTextBoxNS;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace excel2json.GUI
@@ -33,7 +36,7 @@ namespace excel2json.GUI
         private List<ToolStripButton> mExportButtonList;
 
         // 打开的excel文件名，不包含后缀xlsx。。。
-        private String FileName;
+        private string FileName;
 
         /// <summary>
         /// 构造函数，初始化控件初值；创建文本框
@@ -67,16 +70,24 @@ namespace excel2json.GUI
             this.comboBoxEncoding.SelectedIndex = 0;
 
             //-- button list
-            mExportButtonList = new List<ToolStripButton>();
-            mExportButtonList.Add(this.btnCopyJSON);
-            mExportButtonList.Add(this.btnSaveJson);
-            mExportButtonList.Add(this.btnCopyCSharp);
-            mExportButtonList.Add(this.btnSaveCSharp);
+            mExportButtonList = new List<ToolStripButton>
+            {
+                this.btnCopyJSON,
+                this.btnSaveJson,
+                this.btnCopyCSharp,
+                this.btnSaveCSharp
+            };
             enableExportButtons(false);
 
             //-- data manager
             mDataMgr = new DataManager();
             this.btnReimport.Enabled = false;
+
+            var option = TryLoadOptionFromFile();
+            if (option is not null)
+            {
+                SetGUIOptions(option);
+            }
         }
 
         /// <summary>
@@ -136,7 +147,7 @@ namespace excel2json.GUI
             this.statusLabel.Text = "Loading Excel ...";
 
             //-- load options from ui
-            Program.Options options = new Program.Options();
+            Options options = new Options();
             options.ExcelPath = path;
             options.ExportArray = this.comboBoxType.SelectedItem as string == "Array";
             options.Encoding = this.comboBoxEncoding.SelectedText;
@@ -204,7 +215,7 @@ namespace excel2json.GUI
         {
             lock (this.mDataMgr)
             {
-                this.mDataMgr.loadExcel((Program.Options)e.Argument);
+                this.mDataMgr.loadExcel((Options)e.Argument);
             }
         }
 
@@ -432,9 +443,9 @@ namespace excel2json.GUI
             }
         }
 
-        Program.Options GetGUIOptions()
+        Options GetGUIOptions()
         {
-            Program.Options options = new Program.Options();
+            Options options = new Options();
             options.ExportArray = this.comboBoxType.SelectedItem as string == "Array";
             options.Encoding = this.comboBoxEncoding.SelectedText;
             options.Lowcase = this.comboBoxLowcase.SelectedIndex == 0;
@@ -446,6 +457,46 @@ namespace excel2json.GUI
             options.AllString = this.checkBoxAllString.Checked;
             options.NameSpace = this.textBoxNameSpace.Text;
             return options;
+        }
+
+        public void SetGUIOptions(Options options)
+        {
+            this.comboBoxType.SelectedItem = options.ExportArray;
+            this.comboBoxEncoding.SelectedText = options.Encoding;
+            this.comboBoxLowcase.SelectedIndex = options.Lowcase ? 0 : 1;
+            this.comboBoxHeader.Text = options.HeaderRows.ToString();
+            this.comboBoxDateFormat.Text = options.DateFormat;
+            this.comboBoxSheetName.SelectedIndex = 0;
+            this.textBoxExculdePrefix.Text = options.ExcludePrefix;
+            this.checkBoxCellJson.Checked = options.CellJson;
+            this.checkBoxAllString.Checked = options.AllString;
+            this.textBoxNameSpace.Text = options.NameSpace;
+        }
+
+        const string OptionFile = "option.json";
+        private void SaveOptionButton_Click(object sender, EventArgs e)
+        {
+            using (FileStream file = new FileStream(OptionFile, FileMode.Create, FileAccess.Write))
+            {
+                using (TextWriter writer = new StreamWriter(file, Encoding.UTF8))
+                    writer.Write(JsonConvert.SerializeObject(GetGUIOptions()));
+            }
+        }
+
+        private Options TryLoadOptionFromFile()
+        {
+            if (!File.Exists(OptionFile))
+            {
+                return null;
+            }
+
+            string content;
+            using (FileStream file = new FileStream(OptionFile, FileMode.Open, FileAccess.Read))
+            {
+                using (TextReader reader = new StreamReader(file, Encoding.UTF8))
+                content = reader.ReadToEnd();
+                return JsonConvert.DeserializeObject<Options>(content);
+            }
         }
     }
 }

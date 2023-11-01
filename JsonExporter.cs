@@ -71,7 +71,7 @@ namespace excel2json
             }
         }
 
-        public JsonExporter(ExcelLoader excel, Program.Options options)
+        public JsonExporter(ExcelLoader excel, Options options)
             : this(excel, options.Lowcase, options.ExportArray, options.DateFormat, options.ForceSheetName, options.HeaderRows, options.ExcludePrefix, options.CellJson, options.AllString)
         {
         }

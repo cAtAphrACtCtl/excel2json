@@ -11,7 +11,7 @@ namespace excel2json.GUI
     {
 
         // 数据导入设置
-        public Program.Options mOptions { get; private set; }
+        public Options mOptions { get; private set; }
         private Encoding mEncoding;
 
         // 导出数据
@@ -62,7 +62,7 @@ namespace excel2json.GUI
         /// 加载Excel文件
         /// </summary>
         /// <param name="options">导入设置</param>
-        public void loadExcel(Program.Options options)
+        public void loadExcel(Options options)
         {
             mOptions = options;
 
